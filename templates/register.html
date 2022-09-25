@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form action="/register" method="POST">
+    {{admin}}
+    <h2>Uusi käyttäjä</h2>
+    <!-- <p class="error">{{ e_name }}</p> -->
+    <p>
+        Tunnus: <input type="text" name="username" value="{{name}}">
+    </p>
+     <!-- <p class="error">{{ e_match }}{{ e_length }}</p> -->
+    <p>
+        Salasana: <input type="password" name="password">
+    </p>
+    <p>
+        Oikeudet:  
+        <select name="admin_rights" >
+            <option value="False">Peruskäyttäjä</option>
+            <option value="True">Ylläpitäjä</option>
+        </select>
+    </p>
+    <input type="submit" class="button" value="Luo tunnus">
+</form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<form action="/courses" method="POST"></form>
+    <h1>Kurssit</h1>
+    {% for course in courses %}
+    
+    <ul id="list" class="mainNavItem">
+        <li ><a href="/course/{{ course.id }}" class="mainNavItem">{{course.title}}</a> </li> 
+    </ul>
+    {% endfor %}
+
+</form>
+{% endblock %}
+

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
+<title>Verkkokurssisovellus</title>
+
+{% if session.user_id %}
+
+<h1>Tervetuloa {{username}} opiskelemaan!</h1>
+
+{% else %}
+
+<h1>Tervetuloa opiskelemaan!</h1>
+
+{% endif %}
+
+{% endblock %}

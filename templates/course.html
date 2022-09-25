@@ -1,0 +1,163 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{{addedExercise}} {{idddd}}
+
+ <br>
+user logged in and this is a test --- {{test}}
+
+user logged in and this is a test ---------------------- {{test2}} ------test3- {{test3}}  ----------------  --------T5 {{test5}} 
+------------- T6 {{test6}} ---T7  {{getQuestionID}} -------------T8   ---- {{admin}} -----EX {{exercises}} ---- {{e_id}} --- {{e_id2}}
+
+<h2> {{ title }}, {{credits}} op </h2> 
+{% if course.userid == userID%}
+<!--  <button type="button"  class="collapsible" style="background-color: #d3ff6c;">Luo tehtävä</button> <br> --> 
+
+<button type="button" class="collapsible">Lisää Tehtävä</button>
+<div class="content">
+    <form action="/course/{{course.id}}" method="POST">
+        <p>Kuvaus:
+            <input type="text" name="description" value={{description}}>
+        </p>
+        <input type="hidden" class="button" value="{{course.id}}">
+
+        <input type="submit" class="button" value="Luo">
+        
+    </form> 
+</div>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible")
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none"
+        } else {
+            content.style.display = "block"
+        }
+        });
+}
+</script>
+
+<!--   Course was created by user {{course.userid}} and the current user using this page is {{userID}}  /course/{{ course.id }}"-->
+{% endif %}
+<br>
+<b>Tehtävät: </b> 
+<!--
+
+    
+
+-->
+<div>
+
+        {% for exercise in exercises %}  
+        <a href="/newQuiz/{{ exercise.id }}" class="button">lisää tehtävä</a>
+            <div class="courseHeader">
+                
+                {% if exercise.done == false%}
+                    <div class="topright">F</div> 
+                {% else %}
+                    <div class="topright">T</div> 
+                {% endif %}
+                <div class="topleft">{{exercise.description}}</div>
+
+                {% if session.user_id %}
+                        
+                    {% for question in questions %}  
+
+
+                        {% if exercise.id == question.exercisesid %}                     
+                            <form class="questionBox" action="/course/{{id}}" method="post" >
+                                {% if not question.id in getQuestionID %}
+                                
+                                    <div class="questiontopleft">{{question.question}}</div> <br>
+                                    {% for quiz in quizzes %}
+                                    
+                                        {% if question.id == quiz.questionid %}
+                                            <input type="radio" name="quizValue" value="{{quiz}}" required  >
+                                                {{quiz.quiz}}
+                                            </input>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <input type="submit" value="Vastaa" class="bottomright">
+                                {% else %}
+                                    
+                                    {% for quizValueTest in test6 %}
+                                        {% if question.id == quizValueTest.questionid %}
+                                            <div class="center">Palautettu, sinun vastauksesi oli {{quizValueTest.correct}}.  </div>
+                                        {% endif %} 
+                                    {% endfor %}
+                                    
+                                    
+                                {% endif %}
+
+                            </form>
+                        {% endif %} 
+                    {% endfor %}
+
+                {% else %}
+                <div class="center">Kirjaudu sisään nähdäksesi tehtävät.</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+    
+</div>
+{{quizzes}}
+{% endblock %}
+<!--
+    
+            {% if  answer and test6.questionid == question.id %}
+                                    {% endif %}
+<div>
+    {% for exercise in exercises %}
+    {% if exercise.id  %}
+    {% endif %}
+    <div class="courseHeader">
+        {% if exercise.done == False%}
+            <div class="topright">Tekemättä </div> 
+        {% else %}
+            <div class="topright">Tehty</div> 
+        {% endif %}
+        <div class="topleft">{{exercise.description}}</div>
+    </div>
+        
+    {% endfor %}
+    {{questions}}
+    ------------
+    {{questions[0].id}}
+    ------------
+    {{courseQuestions}}
+</div>
+
+
+
+-->
+
+<!--
+<div>
+    {% for cQ in exerciseQuestions %}    
+        <div class="courseHeader">
+            {% if exercises[cQ.exerciseid-1].done == False  %}
+                <div class="topright">Tekemättä </div> 
+            {% else %}
+                <div class="topright">Tehty</div> 
+            {% endif %}
+            <div class="topleft">{{exercises[cQ.exerciseid-1].description}}</div>
+            
+        </div>
+    {% endfor %}
+
+    {{questions}}
+    ------------
+    {{questions[0].id}}
+    ------------
+    {{exerciseQuestions}}
+    ---------------
+</div>
+
+-->

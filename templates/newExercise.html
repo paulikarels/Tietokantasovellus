@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if session.user_id and  admin == "True"  %}
+
+<form action="/new" method="POST">
+    <h2>Lisää tehtävä</h2>
+    <p>Nimi:
+        <input type="text" name="title" value={{title}}>
+    </p>
+    <p>Opintopisteet:
+        <input type="number" name="op" value={{op}} min="1" max="30" > 1-30
+    </p>
+    <input type="submit" class="button" value="Lähetä">
+
+</form>
+
+{% else %}
+
+<form class="testBox" >
+    <div class="center" style="color:#ffb700;">Et voi luoda kursseja, sillä et ole ylläpitäjä.   </div>
+</form>
+
+{% endif %}
+{% endblock %}

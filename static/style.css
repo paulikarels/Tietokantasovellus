@@ -1,0 +1,219 @@
+/*https://www.w3schools.com/cssref/tryit.asp?filename=trycss_cursor*/
+
+body {
+  margin: auto;
+  max-width: 40em;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  color: black;
+  background-color: #e0cdbe;
+}
+/* 
+#d72631, #a2d5c6, #077b8a and #5c3c92  
+https://99designs.com/blog/creative-inspiration/color-combinations/
+ #edca82, #097770, #e0cdbe, #a9c0a6
+ */
+.header {
+  background: #097770;
+  padding: 5px ;
+  font-size: 22;
+  text-align: center;
+  border-radius: 12px;
+  margin-top: .5em;
+  
+}
+
+
+nav li {
+  display: inline-block;
+  padding: 0 .5em;
+}
+
+nav ul {
+  padding: 0;
+  margin: .5em;
+  text-align: center;
+}
+
+a.mainNavItem {
+  color: #000000;
+}
+
+ul.mainNavItem {
+  width: auto;
+  margin:0px 0px 10px 0px;
+}
+
+
+a.button {
+  background-color: #a9c0a6;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin: 5px 5px;
+  text-align: center;
+  display: inline-block;
+}
+
+
+.courseHeader {
+  position: relative;
+  background: #097770;
+  padding: 30px ;
+  font-size: 10;
+  border-radius: 12px;
+  margin-top: .5em;
+  padding-left: 10px;
+  margin-bottom: 2em ;
+}
+
+.topright {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 18px;
+}
+
+.bottomright {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 18px;
+}
+
+
+.questionBox {
+  position: relative;
+  background: #ffebad;
+  padding: 25px;  
+  border-radius: 12px;
+  margin-top: .5em;
+  top: 50%;
+  width: 95%;
+  text-align: center;
+  font-size: 18px;
+}
+
+
+.testBox {
+  position: relative;
+  background: #e0cdbe;
+  padding: 5px;  
+  border-radius: 12px;
+  margin-top: .5em;
+  width: 95%;
+  text-align: center;
+  font-size: 18px;
+}
+
+
+button.collapsible {
+  background-color: #d3ff6c;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin: 5px 5px;
+  text-align: center;
+  display: inline-block;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+
+}
+/* 
+https://stackoverflow.com/questions/23968961/css-how-can-i-make-a-font-readable-over-any-color
+*/
+.topleft {
+  color: #edca82;
+  text-shadow:
+      0.07em 0 black,
+      0 0.07em black,
+      -0.07em 0 black,
+      0 -0.07em black;
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 18px;
+}
+
+.questiontopleft {
+  color: #f6ff49;
+  text-shadow:
+      0.07em 0 black,
+      0 0.07em black,
+      -0.07em 0 black,
+      0 -0.07em black;
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 18px;
+}
+
+
+.center {
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  color: #ff7b6a;
+  text-shadow:
+      0.07em 0 black,
+      0 0.07em black,
+      -0.07em 0 black,
+      0 -0.07em black;
+}
+
+input[type="number"] {
+  width:50px;
+}
+
+input[type="text"] {
+  width:200px;
+}
+
+
+/*
+.box1 {
+  color: #000000;
+  text-align: left;
+  margin: 80px;
+  grid-column: 3/3;
+  
+}
+/*
+.test {
+  vertical-align: top;
+  text-align: left;
+}
+*/
+
+  /*
+a.button {
+     border: none;
+     padding: 6px 10px;
+     text-align: center;
+    text-decoration: none;
+     display: inline-block;
+     font-size: 16px;
+     margin: 4px 4px;
+     cursor: pointer;
+     border-radius: 8px;
+  }
+
+//////////////
+
+a.button {
+    border: 1px solid #030303;
+    border-radius: 5px;
+    color: #222;
+    margin: 5px;
+    padding: 10px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+  */
