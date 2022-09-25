@@ -66,22 +66,6 @@ def add_course():
     if request.method == "GET":
         admin = users.get_admin_status()
         return render_template("newCourse.html", admin=admin)
-"""
-@app.route('/newExercise', methods=["GET", "POST"])
-def add_exercise():
-    if request.method == "POST":
-        title = request.form["title"]
-        op = request.form["op"]
-        userID = session.get("user_id", -1)
-        test = courses.add_course(userID, title, op)
-        #return render_template("new.html", courses=test)
-        return redirect("/course/"+str(test[0]))
-        #return redirect("/course/"+str(1))
-    if request.method == "GET":
-        admin = users.get_admin_status()
-        return render_template("newExercise.html", admin=admin)
-"""
-
 
 @app.route('/newQuiz/<int:id>', methods=["GET", "POST"])
 def add_Quiz(id):
@@ -101,6 +85,7 @@ def add_Quiz(id):
 
         admin = users.get_admin_status()
         return redirect('/courses')
+        #for testing
         return render_template(
             "newQuiz.html", admin=admin, question=question, answer=answer, quiz1=quiz1, quiz2=quiz2, quiz3=quiz3
         )
