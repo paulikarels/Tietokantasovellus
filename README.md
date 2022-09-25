@@ -1,5 +1,7 @@
 Verkkokurssisovellus
 
+[Verkkosivulinkki](https://verkkokurssisovellus1.herokuapp.com/)
+
 # Tietokantasovellus, Verkkokurssisovellus
 
 Kyseinen tietokantasovellus perustuu verkkokurssehin, jossa ylläpitäjät voivat luoda kursseja ja niihin ratkottavia tehtäviä opiskelukäyttöön.
@@ -17,3 +19,10 @@ Sovelluksentoiminnot:
 * Peruskäyttäjällä mahdollisuus liittyä haluamaansa kurssiin
 * Peruskäyttäjällä mahdollisuus tehdä kurssitehtäviä ja saada niistä palaute
 * Muuta tilastoja
+
+### Välipalautus 2:
+* Sovelluksen perustoimminnot pitäisi toimia
+* Sovellus toimii lokaalisesti ja [herokussa](https://verkkokurssisovellus1.herokuapp.com/)
+* Voi luoda peruskäyttäjän tai ylläpitän, joilla voi kirjautua
+* Ylläpitäjä kykenee luoda kurssit, tehtävät ja siihen kysymykset
+* Kaikki kirjautuneet voivat ratkoa olemassa olevia tehtäviä.
