@@ -24,7 +24,7 @@ def login():
         if users.login(username, password):
             return redirect("/")
         else:
-            return error("Väärä tunnus tai salasana", request.path)
+            return error("Väärä tunnus tai salasana", "login")
             #return render_template("error.html", message="Väärä tunnus tai salasana")
 
 @app.route('/register', methods=["GET","POST"])
@@ -39,12 +39,16 @@ def register():
 
         #return render_template("register.html", admin=eval(admin))
         if len(username) < 4:
-            return error("Käyttäjänimi liian lyhyt", request.path)
+            return error("Käyttäjänimi liian lyhyt", "register")
+
+        if len(password) < 4:
+            return error("Salasana liian lyhyt", "register")
+
 
         if users.register(username, password, eval(admin)):
             return redirect("/")
         else:
-            return error("Rekisteröinti ei onnistunut", request.path)
+            return error("Rekisteröinti ei onnistunut, käyttäjä on jo olemassa", "register")
 
 @app.route('/logout')
 def logout():
@@ -72,22 +76,29 @@ def add_Quiz(id):
     if request.method == "POST":
         question = request.form["question"]
         answer = request.form["answer"]
-        questions.add_question(id, question, answer)
-        q_id = questions.get_id(id)[0]
-        quiz1 = request.form["quiz1"]
-        quizzes.add_quiz(q_id, quiz1)
-        quiz2 = request.form["quiz2"]
-        quizzes.add_quiz(q_id, quiz2)
         
-        if ( "quiz3" in request.form  ):
-            quiz3 = request.form["quiz3"]
+        quiz1 = request.form["quiz1"]
+        quiz2 = request.form["quiz2"]
+        quiz3 = request.form.get('quiz3')
+
+        checkA = [quiz1, quiz2, quiz3]
+          
+        if (answer not in checkA):
+            return error("Ei oikeaa vastausta valinnoissa!", '/newQuiz/'+str(id))
+
+        questions.add_question(id, question, answer)
+        q_id = questions.get_id(id)[-1][0]
+        quizzes.add_quiz(q_id, quiz1)
+        quizzes.add_quiz(q_id, quiz2)
+        if ( quiz3 ):
             quizzes.add_quiz(q_id, quiz3)
 
+
+        courseID = exercises.get_course_id(id)[0][0]
         admin = users.get_admin_status()
-        return redirect('/courses')
-        #for testing
+        return redirect('/course/' + str(courseID))
         return render_template(
-            "newQuiz.html", admin=admin, question=question, answer=answer, quiz1=quiz1, quiz2=quiz2, quiz3=quiz3
+            "newQuiz.html", admin=admin, question=question, answer=answer, quiz1=quiz1, quiz2=quiz2, quiz3=quiz3, q_id=q_id
         )
     if request.method == "GET":
         admin = users.get_admin_status()
@@ -105,6 +116,8 @@ def allcourses():
         allcourses = courses.get_all()
         return render_template("courses.html", courses=allcourses)
 
+#https://stackoverflow.com/questions/6320113/how-to-prevent-form-resubmission-when-page-is-refreshed-f5-ctrlr
+#https://en.wikipedia.org/wiki/Post/Redirect/Get
 # will reconstruct/clean later
 @app.route('/course/<int:id>', methods=["GET", "POST"])
 def course(id):
@@ -120,7 +133,7 @@ def course(id):
             course = courses.get_course(id)
             exercise = exercises.course_exercise(id)
             e_id = exercise[0][0]
-            question = questions.exercise_questions(e_id)
+            question = questions.get_all()
             #quizObject = str(request.form['quizValue'].replace("(", "").replace(")", "").replace("'", "")).rsplit(", ")
  
             #not working properly 24.9 -- post
@@ -149,7 +162,7 @@ def course(id):
             course = courses.get_course(id)
             exercise = exercises.course_exercise(id)
             e_id = exercise[0][0]
-            question = questions.exercise_questions(e_id)
+            question = questions.get_all()
             #exerciseQuestions = questions.course_questions()
             quiz = quizzes.exercise_quizzes(id)
             userID = session.get("user_id", -1)

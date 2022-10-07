@@ -2,7 +2,7 @@ from db import db
 
 def get_id(e_id):
     sql = "SELECT id FROM questions WHERE exercisesID=:exercisesID"
-    return db.session.execute(sql, {"exercisesID": e_id}).fetchall()[-1]
+    return db.session.execute(sql, {"exercisesID": e_id}).fetchall()
 
 def exercise_questions(q_id):
     sql = "SELECT * FROM questions WHERE exercisesID=:exercisesID"
@@ -17,9 +17,9 @@ def get_all_exerciseIds():
     return db.session.execute(sql).fetchall()
      
     
-def correct_answer_check(q_answer):
-    sql = "SELECT * FROM questions WHERE answer=:q_answer LIMIT 1"
-    result = db.session.execute(sql, {"q_answer": q_answer}).fetchall()
+def correct_answer_check(q_answer, q_id):
+    sql = "SELECT * FROM questions WHERE answer=:q_answer AND id=:q_id"
+    result = db.session.execute(sql, {"q_answer": q_answer, "q_id":q_id} ).fetchall()
     if (result):
         return True
     else:

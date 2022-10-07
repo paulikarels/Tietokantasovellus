@@ -1,23 +1,28 @@
+import secrets
 import os
-from pickle import FALSE
 from db import db
+from pickle import FALSE
 from flask import render_template, redirect, request, session, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def login(username, password):
-    sql = "SELECT id, password FROM users WHERE username=:username"
+    sql = "SELECT id, password, username, admin FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     if not user:
         return False
+    if not check_password_hash(user.password, password):
+        return False
     else:
         if check_password_hash(user.password, password):
+            session["csrf_token"]= secrets.token_hex(16)
             session["user_id"] = user.id
+            session["user_name"] = user.username
+            session["admin"] = user.admin
             return True
         else:
             return False
 
-# sql = "INSERT INTO users (admin, username, password) VALUES ('false', :username, :password);"
 def register(username, password, admin):
     hash_value = generate_password_hash(password)
     try:
@@ -27,12 +32,16 @@ def register(username, password, admin):
     except:
         return False
     return login(username, password)
-
+    
 def user_id():
     return session.get("user_id", -1)
 
 def logout():
-    del session['user_id']
+    del session["user_id"]
+    del session["user_name"]
+    del session["admin"]
+    del session["csrf_token"]    
+
 
 def username():
     result = db.session.execute("SELECT username FROM users WHERE id=:id", {"id": session.get("user_id", -1)})

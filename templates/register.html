@@ -1,16 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
 
+{% with messages=get_flashed_messages(with_categories=true) %}
+ {% for category, message in messages %}
+  <div class='alert'>
+    {{ message }}
+   </div>
+ {% endfor %}
+{% endwith %}
+
 <form action="/register" method="POST">
     {{admin}}
     <h2>Uusi käyttäjä</h2>
     <!-- <p class="error">{{ e_name }}</p> -->
     <p>
-        Tunnus: <input type="text" name="username" value="{{name}}">
+        Tunnus: <input type="text" name="username" value="{{name}}" maxlength="20" required> 
     </p>
      <!-- <p class="error">{{ e_match }}{{ e_length }}</p> -->
     <p>
-        Salasana: <input type="password" name="password">
+        Salasana: <input type="password" name="password" maxlength="20"  required>
     </p>
     <p>
         Oikeudet:  

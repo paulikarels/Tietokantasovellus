@@ -1,24 +1,32 @@
 {% extends "layout.html" %}
 {% block content %}
 
+{% with messages=get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+        <div class='alert'>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endwith %}
+
 {% if session.user_id and  admin == "True"  %}
 {{question}} {{answer}} {{quiz1}} {{quiz2}} {{quiz3}} {{id}}
 <form  method="POST">
     <h2>Lisää kysymys</h2>
     <p>Kysymys: 
-        <input type="text" name="question" value={{question}}>
+        <input type="text" name="question" value="{{question}}" maxlength="30"  required>
     </p>
     <p>Oikea vastaus:
-        <input type="text" name="answer" value={{answer}}>
+        <input type="text" name="answer" value="{{answer}}" maxlength="30"  required>
     </p>
 
 
     <p>Vastausvaihtoehto 1*:
-        <input type="text" name="quiz1" value="{{quiz1}}" required>
+        <input type="text" name="quiz1" value="{{quiz1}}" maxlength="30"  required>
     </p>
 
     <p>Vastausvaihtoehto 2*:
-        <input type="text" name="quiz2" value="{{quiz2}}" required>
+        <input type="text" name="quiz2" value="{{quiz2}}" maxlength="30"  required>
     </p>
 
     <p>Vastausvaihtoehto 3:

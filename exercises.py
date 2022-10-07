@@ -14,3 +14,8 @@ def add_exercise(courseID, description):
     sql = "INSERT INTO exercises (courseID, description, done) VALUES (:courseID, :description, 'false')"
     db.session.execute(sql, {"courseID":courseID, "description":description})
     db.session.commit()
+
+def get_course_id(Q_exercisesID):
+    sql = "select E.courseid from questions Q, exercises E WHERE  :Q_exercisesID  = E.id LIMIT 1"
+    exercises = db.session.execute(sql, {"Q_exercisesID": Q_exercisesID}).fetchall()
+    return exercises
