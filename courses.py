@@ -31,3 +31,16 @@ def id_taken(c_id):
     sql = 'SELECT id FROM courses WHERE id=:id'
     return db.session.execute(sql, {"id": c_id}).fetchall()[-1]
     
+def enroll_User(c_id, u_id):
+    sql = "INSERT INTO userEnrollments (courseID, userID, scores) VALUES (:courseID, :userID, 0)"
+    db.session.execute(sql,  {"courseID":c_id, "userID":u_id})
+    db.session.commit()
+
+def check_enrollment(u_id):
+    sql = "SELECT courseID FROM userEnrollments WHERE userID =:u_id"
+    result = db.session.execute(sql, {"u_id":u_id}).fetchall()
+    res = []
+    for tes in result:
+        res.append(tes[0])
+
+    return res

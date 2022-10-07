@@ -23,6 +23,7 @@ def login(username, password):
         else:
             return False
 
+
 def register(username, password, admin):
     hash_value = generate_password_hash(password)
     try:

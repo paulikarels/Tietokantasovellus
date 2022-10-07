@@ -30,6 +30,16 @@ def add_question(e_id, question, answer):
     db.session.execute(sql,  {"exercisesID":e_id, "question":question, "answer":answer})
     db.session.commit()
 
+
+
+
+
+
+
+
+
+    
+
 def course_questions():
     sql = "SELECT * FROM exerciseQuestions"
     return db.session.execute(sql).fetchall()

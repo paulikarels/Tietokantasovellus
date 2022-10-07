@@ -3,7 +3,21 @@
 
 <br>
 
-<h2> {{ title }}, {{credits}} op </h2> 
+{% if course.id not in userEnrollment and not course.userid == userID%}
+    <div> 
+        <form action="/course/{{id}}" method="post" >
+            <h2> {{ title }}, {{credits}} op  &nbsp; <input type="submit" name="joinCourse" class="button"  value="Liity kurssille"> </input> <h2>  
+        </form>
+    </div>
+
+{% else %}
+
+    <div> 
+        <form action="/course/{{id}}" method="post" >
+            <h2> {{ title }}, {{credits}} op  &nbsp;  <h2>  
+        </form>
+    </div>
+{% endif %}
 {% if course.userid == userID%}
 <!--  <button type="button"  class="collapsible" style="background-color: #d3ff6c;">Luo tehtävä</button> <br> --> 
 
@@ -43,15 +57,13 @@
 <b>Tehtävät: </b> 
 <!--
 
-    
-
 -->
 <div>
 
         {% for exercise in exercises %}  
-        {% if course.userid == userID%}
-            <a href="/newQuiz/{{ exercise.id }}" class="button">lisää kysymys</a>
-        {% endif %}
+            {% if course.userid == userID%}
+                <a href="/newQuiz/{{ exercise.id }}" class="button">lisää kysymys</a>
+            {% endif %}
             <div class="courseHeader">
                 
                 {% if exercise.done == false%}
@@ -61,7 +73,7 @@
                 {% endif %}
                 <div class="topleft">{{exercise.description}}</div>
 
-                {% if session.user_id %}
+                {% if session.user_id and  course.id  in userEnrollment or  course.userid == userID %}
                         
                     {% for question in questions %}  
 
@@ -100,7 +112,7 @@
                     {% endfor %}
 
                 {% else %}
-                <div class="center">Kirjaudu sisään nähdäksesi tehtävät.</div>
+                    <div class="center">Kirjaudu ja liity kurssiin nähdäksesi tehtävät.</div>
                 {% endif %}
             </div>
         {% endfor %}
