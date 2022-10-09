@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if course.userid == userID%}
+    <p>Kurssiisi liittyneet käyttäjät:</p>
+    {% for userEnrollment in enrollments %} 
+    <form action="/myCourse/{{id}}" method="post" >
+        <ul id="list" class="mainNavItem">
+            <li >
+                {{userEnrollment.username}} 
+                <input type="hidden" name="kickUser"  value="{{userEnrollment}}"/>
+                <input type="submit" value="Poista kurssilta"> 
+            </li> 
+        </ul>
+    </form>
+    {% endfor %}
+
+{% endif %}
+<br> <br>
+
+{% endblock %}

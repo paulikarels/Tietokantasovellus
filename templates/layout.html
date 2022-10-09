@@ -7,16 +7,25 @@
             </a>
         </h1>
     </div>
-    {% if session.user_id %}
+    {% if session.user_id and session.admin%}
     <nav>
         <ul>
             <a href="/logout" class="button"> Kirjaudu ulos</a>
             <a href="/courses" class="button" > Kurssit</a>
             <a href="/newCourse" class="button" > Luo kurssi</a>
+            <a href="/myCourses" class="button" > Kurssini</a>
         <ul>
     </nav>
     
-    {% else %}
+    {% elif session.user_id %}
+    <nav>
+        <ul>
+            <a href="/logout" class="button"> Kirjaudu ulos</a>
+            <a href="/courses" class="button" > Kurssit</a>
+            <a href="/myCourses" class="button" > Kurssini</a>
+        <ul>
+    </nav>
+    {% else  %}
     <nav>
         <ul>
                 <li><a href="/login" class="button" > Kirjaudu</a>
@@ -27,4 +36,5 @@
     {% endif %}
 </div>
 
-{% block content %}{% endblock %}
+{% block content %}
+{% endblock %}

@@ -31,23 +31,14 @@ def add_question(e_id, question, answer):
     db.session.commit()
 
 
-
-
-
-
-
-
-
-    
-
 def course_questions():
     sql = "SELECT * FROM exerciseQuestions"
     return db.session.execute(sql).fetchall()
 
 
-def addUserQuestionQuiz(u_id, question_id, quiz_id, correct):
-    sql = "INSERT INTO userQuizAnswers (userID, questionID, quizID, correct) VALUES (:userid, :questionid, :quizid, :correct)"
-    db.session.execute(sql,  {"userid":u_id, "questionid":question_id, "quizid":quiz_id, "correct":correct})
+def addUserQuestionQuiz(u_id, question_id, quiz_id, correct, courseID):
+    sql = "INSERT INTO userQuizAnswers (userID, questionID, quizID, correct, courseID) VALUES (:userid, :questionid, :quizid, :correct, :courseID)"
+    db.session.execute(sql,  {"userid":u_id, "questionid":question_id, "quizid":quiz_id, "correct":correct , "courseID":courseID})
     db.session.commit()
     
 def userQuizData(u_id):
@@ -75,6 +66,32 @@ def userQuizData2(u_id):
         return res
 
     
+def userQuizData3(u_id):
+    sql = "SELECT questionID FROM userQuizAnswers WHERE userID=:u_id"
+    result = db.session.execute(sql,  {"u_id":u_id}).fetchall()
+    if not bool(result): 
+          return db.session.execute(sql,  {"u_id":u_id}).fetchall()
+    else:
+        res = []
+        for tes in result:
+            res.append(tes[0])
+
+        return res
+
+
+def deleteUserQuizData(u_id, c_id):
+    sql = "DELETE FROM userQuizAnswers WHERE userID=:u_id and courseID=:c_id"
+    db.session.execute(sql,  {"u_id":u_id, "c_id":c_id})
+    db.session.commit()
+
+def userQuizDataQuestions(u_id, q_id):
+    sql = "SELECT * FROM userQuizAnswers WHERE userID=:u_id AND questionID=:q_id"
+    result = db.session.execute(sql,  {"u_id":u_id, "q_id":q_id}).fetchall()
+    if not bool(result): 
+          return db.session.execute(sql, {"u_id":u_id, "q_id":q_id}).fetchall()
+    else:
+        return result
+
 def userQuizResultCheck(u_id):
     sql = "SELECT correct FROM userQuizAnswers WHERE userID=:u_id"
     return db.session.execute(sql,  {"u_id":u_id}).fetchone()
@@ -88,12 +105,3 @@ def testingQuest(u_id):
 
     return res
 
-
-'''
-CREATE TABLE userQuizAnswers (
-    userID INTEGER REFERENCES users ON DELETE CASCADE,
-    questionID INTEGER REFERENCES questions ON DELETE CASCADE,
-    quizID INTEGER REFERENCES quizzes ON DELETE CASCADE,
-    correct BOOLEAN
-);
-'''

@@ -44,7 +44,6 @@ def register():
         if len(password) < 4:
             return error("Salasana liian lyhyt", "register")
 
-
         if users.register(username, password, eval(admin)):
             return redirect("/")
         else:
@@ -74,6 +73,7 @@ def add_course():
 @app.route('/newQuiz/<int:id>', methods=["GET", "POST"])
 def add_Quiz(id):
     if request.method == "POST":
+        admin = users.get_admin_status()
         question = request.form["question"]
         answer = request.form["answer"]
         
@@ -95,7 +95,6 @@ def add_Quiz(id):
 
 
         courseID = exercises.get_course_id(id)[0][0]
-        admin = users.get_admin_status()
         return redirect('/course/' + str(courseID))
         return render_template(
             "newQuiz.html", admin=admin, question=question, answer=answer, quiz1=quiz1, quiz2=quiz2, quiz3=quiz3, q_id=q_id
@@ -116,6 +115,105 @@ def allcourses():
         allcourses = courses.get_all()
         return render_template("courses.html", courses=allcourses)
 
+
+
+@app.route('/myCourses', methods=["GET", "POST"])
+def userscourses():
+    if request.method == "POST":
+        userID = session.get("user_id", -1)
+        usercourses = courses.get_user_courses(userID)
+        return render_template("myCourses.html", usercourses=usercourses)
+    if request.method == "GET":
+        userID = session.get("user_id", -1)
+        
+        enrollments = courses.check_enrollment(userID) 
+        if not enrollments:
+            enrollments = False
+
+        allcourses = courses.get_all()
+        userCreatedCourses = courses.get_user_courses(userID)
+        return render_template(
+            "myCourses.html", userCreatedCourses=userCreatedCourses, enrollments=enrollments, allcourses=allcourses
+        )
+
+
+@app.route('/myCourse/<int:id>', methods=["GET", "POST"])
+def mycourses(id):
+    if request.method == "POST":
+        courseID = courses.id_taken(id)[0]
+        course = courses.get_course(id)
+        userID = session.get("user_id", -1)
+        value = courses.check_enrollment(userID)
+        enrollments = courses.user_enrollments(courseID)
+
+        
+        userObject = str(request.form['kickUser'].replace("(", "").replace(")", "").replace("'", "")).rsplit(", ")
+        questions.deleteUserQuizData(userObject[2], userObject[1])
+        courses.remove_user_enrollment(userObject[2], userObject[1])
+        return redirect('/myCourse/' + str(courseID))
+        return render_template(
+            "userCourse.html", course=course, userID=userID, enrollments=enrollments, 
+            id=id, userObject=userObject
+        )
+    if request.method == "GET":
+        #{% if course.userid == userID%}
+        admin = users.get_admin_status()
+        courseID = courses.id_taken(id)[0]
+        course = courses.get_course(id)
+        userID = session.get("user_id", -1)
+        value = courses.check_enrollment(userID)
+        enrollments = courses.user_enrollments(courseID)
+        return render_template(
+            "userCourse.html", course=course, userID=userID, enrollments=enrollments, id=id
+        )
+
+
+
+    
+@app.route('/viewCourse/<int:id>', methods=["GET", "POST"])
+def viewCourse(id):
+    if request.method == "POST":
+        userID = session.get("user_id", -1)
+
+        return render_template("viewCourse.html")
+    if request.method == "GET":
+
+        userID = session.get("user_id", -1)
+
+        course = courses.get_course(id)
+        exercise = exercises.course_exercise(id)
+        #question = questions.exercise_questions(exercise.id)
+        res = []
+        for exercise in exercise:
+            res.append(exercises.get_user_exercise_completions(userID, id, exercise.id))
+
+        courseQuestions = []
+        for re in res:
+            for question in re:
+                courseQuestions.append(question.id)
+
+        #length = (reduce(lambda count, l: count + len(l), res, 0))
+        #taskAssigns = courses.get_user_course_completions(userID, id, exercise.id)
+        testQuestion = questions.userQuizData(userID)
+
+        exerciseAssigns = []
+        #exerciseAssigns = exercises.get_user_exercise_completions(userID, id, exercise.id)
+
+        allUserQuizzes = questions.userQuizData3(userID)
+
+        howManyDone = set(courseQuestions) & set(allUserQuizzes)
+
+
+        return render_template(
+            "viewCourse.html", userID=userID, course=course, 
+            testQuestion=testQuestion, exercise=exercise, allUserQuizzes=allUserQuizzes, howManyDone=howManyDone,
+            exerciseAssigns=exerciseAssigns, res=res,  courseQuestions=courseQuestions
+        )
+        
+        return render_template(
+            "viewCourse.html", userID=userID, course=course, exercise = exercise, question=question 
+        )
+
 #https://stackoverflow.com/questions/6320113/how-to-prevent-form-resubmission-when-page-is-refreshed-f5-ctrlr
 #https://en.wikipedia.org/wiki/Post/Redirect/Get
 # will reconstruct/clean later
@@ -132,34 +230,27 @@ def course(id):
 
             return redirect("/course/"+str(courseID))
 
-        elif ( "quizValue" in request.form  ) :
+        elif ( "quizValue" in request.form  ):
             courseID = courses.id_taken(id)[0]
 
-            #fix search 
+             
             exercise = exercises.course_exercise(id)
-            test=exercise
-            
-            e_id = exercise[0][0]
+
             #exerciseQuestions = questions.course_questions()
 
             userID = session.get("user_id", -1)
 
             quizObject = str(request.form['quizValue'].replace("(", "").replace(")", "").replace("'", "")).rsplit(", ")
 
-            #not working properly 24.9 -- get
-            #problem is that it checks if the answer exists not that the answer matches the actual question
             answer = questions.correct_answer_check(quizObject[2], quizObject[1])
-            questions.addUserQuestionQuiz(userID, quizObject[1], quizObject[0], answer)
+            questions.addUserQuestionQuiz(userID, quizObject[1], quizObject[0], answer, courseID)
 
-
-            #test6 = questions.userQuizResultCheck(userID)
 
             return redirect("/course/"+str(courseID))
         elif ( "joinCourse" in request.form  ) :
             courseID = courses.id_taken(id)[0]
             userID = session.get("user_id", -1)
             courses.enroll_User(courseID,userID)
-            #value = courses.check_enrollment(userID)
             return redirect("/course/"+str(courseID))
 
         else:
@@ -181,14 +272,11 @@ def course(id):
 
         #quizObject = str(request.form['quizValue'].replace("(", "").replace(")", "").replace("'", "")).rsplit(", ")
 
-
-        #not working properly 24.9 -- post
         test6 = questions.userQuizData(userID)
         getQuestionID = questions.testingQuest(userID)
         UserAnswers = questions.userQuizResultCheck(userID)
         admin = users.get_admin_status()
         test8 = UserAnswers
-
 
 
         quiz = quizzes.exercise_quizzes(id)

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if enrollments %}
+<b> Kurssit johon olet liittynyt: </b> <br/> <br/> 
+    {% for course in allcourses %}  
+
+        {% for userEnrollment in enrollments %} 
+            {% if userEnrollment == course.id%}
+                <ul id="list" class="mainNavItem">
+                    <li ><a href="/viewCourse/{{ course.id }}" class="mainNavItem">{{course.title}}</a> </li> 
+                </ul>
+            {% endif%}
+
+        {% endfor %} 
+
+    {% endfor %}
+
+
+{% endif%}
+<br/> 
+{% if userCreatedCourses %}
+<div>
+    <b> Tekemäsi kurssit: </b> <br/> <br/> 
+    {% for userCreatedCourse in userCreatedCourses %}  
+    
+        <ul id="list" class="mainNavItem">
+            <li ><a href="/myCourse/{{userCreatedCourse.id}}" class="mainNavItem">{{userCreatedCourse.title}}</a> </li> 
+        </ul>
+    {% endfor %}
+
+</div>
+{% endif%}
+
+{% endblock %}

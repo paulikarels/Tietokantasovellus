@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if (courseQuestions|length - howManyDone|length) <= 0 %}
+    <p> Olet suorittanut kaikki  kurssin <b> {{course.title}} </b>saatavilla olevat tehtävät. </p> 
+    <p> Löydät lisää kursseja <a href="/courses">täältä.</a> </p>
+{% else %}
+
+    <p> Suoritettujen tehtävien määrä kurssista <b> {{course.title}} </b> on {{howManyDone|length}}/{{courseQuestions|length}} </p> 
+    {% if (howManyDone|length - courseQuestions|length) <= 1 %}
+        <p>Sinulla on vielä {{courseQuestions|length - howManyDone|length }} tehtävä tekemättä. <a href="/course/{{course.id}}">Paina tätä</a> jatkaaksesi tehtävien tekoa. </p>
+    {% else %}
+        <p>Sinulla on vielä {{courseQuestions|length - howManyDone|length }} tehtävää tekemättä. <a href="/course/{{course.id}}">Paina tätä</a> jatkaaksesi tehtävien tekoa. </p>
+    {% endif %}
+
+{% endif %}
+
+
+{{t}}
+
+{% endblock %}

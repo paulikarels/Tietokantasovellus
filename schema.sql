@@ -7,7 +7,7 @@ CREATE TABLE users (
     password TEXT 
 );
 
-
+--credits?
 CREATE TABLE  courses (
     id SERIAL PRIMARY KEY,
     userID INTEGER REFERENCES users ON DELETE CASCADE,
@@ -23,13 +23,6 @@ CREATE TABLE userEnrollments  (
     scores INTEGER
 );
 
---acts mainly as a permission handler for creating courses
-CREATE TABLE courseInstructors (
-    courseID INTEGER REFERENCES courses ON DELETE CASCADE,
-    userID INTEGER REFERENCES users ON DELETE CASCADE
-);
-
-
 
 --consider deleting DONE
 CREATE TABLE exercises (
@@ -37,8 +30,6 @@ CREATE TABLE exercises (
     courseID INTEGER REFERENCES courses ON DELETE CASCADE,
     description TEXT,
     done BOOLEAN DEFAULT false
-    --answer TEXT,
-    --correctAnswer TEXT
 );
 
 CREATE TABLE questions (
@@ -59,6 +50,7 @@ CREATE TABLE quizzes (
 
 CREATE TABLE userQuizAnswers (
     userID INTEGER REFERENCES users ON DELETE CASCADE,
+    courseID INTEGER REFERENCES courses ON DELETE CASCADE,
     questionID INTEGER REFERENCES questions ON DELETE CASCADE,
     quizID INTEGER REFERENCES quizzes ON DELETE CASCADE,
     correct BOOLEAN

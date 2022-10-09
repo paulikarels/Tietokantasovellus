@@ -3,7 +3,7 @@
 
 <br>
 
-{% if course.id not in userEnrollment and not course.userid == userID%}
+{% if course.id not in userEnrollment and  session.user_id %}
     <div> 
         <form action="/course/{{id}}" method="post" >
             <h2> {{ title }}, {{credits}} op  &nbsp; <input type="submit" name="joinCourse" class="button"  value="Liity kurssille"> </input> <h2>  
@@ -18,38 +18,39 @@
         </form>
     </div>
 {% endif %}
+
 {% if course.userid == userID%}
 <!--  <button type="button"  class="collapsible" style="background-color: #d3ff6c;">Luo tehtävä</button> <br> --> 
 
-<button type="button" class="collapsible">Lisää Tehtävä</button>
-<div class="content">
-    <form action="/course/{{course.id}}" method="POST">
-        <p>Kuvaus:
-            <input type="text" name="description" value="{{description}}" maxlength="30" required>
-        </p>
-        <input type="hidden" class="button" value="{{course.id}}">
+    <button type="button" class="collapsible">Lisää Tehtävä</button>
+    <div class="content">
+        <form action="/course/{{course.id}}" method="POST">
+            <p>Kuvaus:
+                <input type="text" name="description" value="{{description}}" maxlength="30" required>
+            </p>
+            <input type="hidden" class="button" value="{{course.id}}">
 
-        <input type="submit" class="button" value="Luo">
-        
-    </form> 
-</div>
+            <input type="submit" class="button" value="Luo">
+            
+        </form> 
+    </div>
 
-<script>
-    var coll = document.getElementsByClassName("collapsible")
-    var i;
+    <script>
+        var coll = document.getElementsByClassName("collapsible")
+        var i;
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-            content.style.display = "none"
-        } else {
-            content.style.display = "block"
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none"
+            } else {
+                content.style.display = "block"
+            }
+            });
         }
-        });
-}
-</script>
+    </script>
 
 <!--   Course was created by user {{course.userid}} and the current user using this page is {{userID}}  /course/{{ course.id }}"-->
 {% endif %}
