@@ -26,3 +26,9 @@ Sovelluksentoiminnot:
 * Voi luoda peruskäyttäjän tai ylläpitän, joilla voi kirjautua
 * Ylläpitäjä kykenee luoda kurssit, tehtävät ja siihen kysymykset
 * Kaikki kirjautuneet voivat ratkoa olemassa olevia tehtäviä.
+
+### Välipalautus 3:
+* Korjattu ensimmäisen välipalautuksen virheet/bugit
+* Lisätty rekisteröinti kursseihin
+* Ylläpitäjä voi seurata omien kurssien liittyneitä käyttäjiä ja poistaa niitä
+* Käyttäjä voi seurata omien kurssien edistystä
