@@ -3,7 +3,7 @@
 
 <br>
 
-{% if course.id not in userEnrollment and not course.userid == userID%}
+{% if course.id not in userEnrollment and  session.user_id %}
     <div> 
         <form action="/course/{{id}}" method="post" >
             <h2> {{ title }}, {{credits}} op  &nbsp; <input type="submit" name="joinCourse" class="button"  value="Liity kurssille"> </input> <h2>  
@@ -20,7 +20,6 @@
 {% endif %}
 
 {% if course.userid == userID%}
-<!--  <button type="button"  class="collapsible" style="background-color: #d3ff6c;">Luo tehtävä</button> <br> --> 
 
     <button type="button" class="collapsible">Lisää Tehtävä</button>
     <div class="content">
@@ -52,13 +51,10 @@
         }
     </script>
 
-<!--   Course was created by user {{course.userid}} and the current user using this page is {{userID}}  /course/{{ course.id }}"-->
 {% endif %}
 <br>
 <b>Tehtävät: </b> 
-<!--
 
--->
 <div>
 
         {% for exercise in exercises %}  
@@ -122,55 +118,3 @@
 </div>
 
 {% endblock %}
-<!--
-    
-            {% if  answer and test6.questionid == question.id %}
-                                    {% endif %}
-<div>
-    {% for exercise in exercises %}
-    {% if exercise.id  %}
-    {% endif %}
-    <div class="courseHeader">
-        {% if exercise.done == False%}
-            <div class="topright">Tekemättä </div> 
-        {% else %}
-            <div class="topright">Tehty</div> 
-        {% endif %}
-        <div class="topleft">{{exercise.description}}</div>
-    </div>
-        
-    {% endfor %}
-    {{questions}}
-    ------------
-    {{questions[0].id}}
-    ------------
-    {{courseQuestions}}
-</div>
-
-
-
--->
-
-<!--
-<div>
-    {% for cQ in exerciseQuestions %}    
-        <div class="courseHeader">
-            {% if exercises[cQ.exerciseid-1].done == False  %}
-                <div class="topright">Tekemättä </div> 
-            {% else %}
-                <div class="topright">Tehty</div> 
-            {% endif %}
-            <div class="topleft">{{exercises[cQ.exerciseid-1].description}}</div>
-            
-        </div>
-    {% endfor %}
-
-    {{questions}}
-    ------------
-    {{questions[0].id}}
-    ------------
-    {{exerciseQuestions}}
-    ---------------
-</div>
-
--->

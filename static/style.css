@@ -124,9 +124,7 @@ button.collapsible {
   overflow: hidden;
 
 }
-/* 
-https://stackoverflow.com/questions/23968961/css-how-can-i-make-a-font-readable-over-any-color
-*/
+
 .topleft {
   color: #edca82;
   text-shadow:
@@ -190,45 +188,3 @@ input[type="number"] {
 input[type="text"] {
   width:200px;
 }
-
-
-/*
-.box1 {
-  color: #000000;
-  text-align: left;
-  margin: 80px;
-  grid-column: 3/3;
-  
-}
-/*
-.test {
-  vertical-align: top;
-  text-align: left;
-}
-*/
-
-  /*
-a.button {
-     border: none;
-     padding: 6px 10px;
-     text-align: center;
-    text-decoration: none;
-     display: inline-block;
-     font-size: 16px;
-     margin: 4px 4px;
-     cursor: pointer;
-     border-radius: 8px;
-  }
-
-//////////////
-
-a.button {
-    border: 1px solid #030303;
-    border-radius: 5px;
-    color: #222;
-    margin: 5px;
-    padding: 10px;
-    white-space: nowrap;
-    text-decoration: none;
-}
-  */

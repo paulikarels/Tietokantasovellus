@@ -1,7 +1,6 @@
 import secrets
 import os
 from db import db
-from pickle import FALSE
 from flask import render_template, redirect, request, session, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 

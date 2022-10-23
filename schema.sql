@@ -1,5 +1,3 @@
-
-
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     admin BOOLEAN,
@@ -7,7 +5,7 @@ CREATE TABLE users (
     password TEXT 
 );
 
---credits?
+
 CREATE TABLE  courses (
     id SERIAL PRIMARY KEY,
     userID INTEGER REFERENCES users ON DELETE CASCADE,
@@ -15,7 +13,7 @@ CREATE TABLE  courses (
     credits INTEGER
 );
 
---scores?
+
 CREATE TABLE userEnrollments  (
     id SERIAL PRIMARY KEY,
     courseID INTEGER REFERENCES courses ON DELETE CASCADE,
@@ -23,8 +21,6 @@ CREATE TABLE userEnrollments  (
     scores INTEGER
 );
 
-
---consider deleting DONE
 CREATE TABLE exercises (
     id SERIAL PRIMARY KEY,
     courseID INTEGER REFERENCES courses ON DELETE CASCADE,
@@ -45,8 +41,6 @@ CREATE TABLE quizzes (
     questionID INTEGER REFERENCES questions ON DELETE CASCADE,
     quiz TEXT
 );
-
-
 
 CREATE TABLE userQuizAnswers (
     userID INTEGER REFERENCES users ON DELETE CASCADE,
