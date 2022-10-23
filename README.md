@@ -32,3 +32,9 @@ Sovelluksentoiminnot:
 * Lisätty rekisteröinti kursseihin
 * Ylläpitäjä voi seurata omien kurssien liittyneitä käyttäjiä ja poistaa niitä
 * Käyttäjä voi seurata omien kurssien edistystä
+
+### Lopullinen palautus:
+* Arvioinnista mainitut virheet ja huomiot korjattu.
+* Sovelluksen käyttökokemusta parannettu.
+* Lisätty lisää virhekäsittelijöitä ja virheviestejä.
+* Koodia siistitty ja poistettu ylimääräisiä kommentteja.
