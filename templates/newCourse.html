@@ -2,11 +2,19 @@
 {% block content %}
 
 {% if session.user_id and  admin == "True"  %}
-{{courses}}
+
+{% with messages=get_flashed_messages(with_categories=true) %}
+ {% for category, message in messages %}
+  <div class='alert'>
+    {{ message }}
+   </div>
+ {% endfor %}
+{% endwith %}
+
 <form  method="POST">
     <h2>Lisää kurssi</h2>
     <p>Nimi:
-        <input type="text" name="title" value="{{title}}" maxlength="30" required>
+        <input type="text" name="title" value="{{title}}" minlength="3" maxlength="30" required>
     </p>
     <p>Opintopisteet:
         <input type="number" name="op" value="{{op}}" min="1" max="30" required > 1-30

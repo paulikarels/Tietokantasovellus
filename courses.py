@@ -1,7 +1,9 @@
 from db import db
+from sqlalchemy.exc import IntegrityError
 
 def add_course(userID, title, op):
-    sql = "INSERT INTO courses (userID, title, credits) VALUES (:userID, :title, :op)"
+    try:
+        sql = "INSERT INTO courses (userID, title, credits) VALUES (:userID, :title, :op)"
 
     #can't take values from inserts/updates because of sqlalchemy v.1.4.2 :)))) 
     #c_id = db.session.execute(sql, {"u_id":u_id, "title":title, "op":op  }).fetchone()[0]
@@ -10,11 +12,17 @@ def add_course(userID, title, op):
     #sqlQuery = 'SELECT id FROM courses WHERE title=:title ORDER BY id DESC LIMIT 1'
     #c_id = db.session.execute(sqlQuery, {"title": title}).fetchall()
 
-    db.session.execute(sql, {"userID":userID, "title":title, "op":op })
-    db.session.commit()
 
-    test = db.session.execute("SELECT id FROM courses ORDER BY id DESC LIMIT 1").fetchone()
-    return test
+
+        db.session.execute(sql, {"userID":userID, "title":title, "op":op })
+        db.session.commit()
+
+        test = db.session.execute("SELECT id FROM courses ORDER BY id DESC LIMIT 1").fetchone()
+
+        return test
+    except IntegrityError:
+        db.session.rollback()
+        return False
 
 def get_all():
     sql = 'SELECT id, title FROM courses ORDER BY id'

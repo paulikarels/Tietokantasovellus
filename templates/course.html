@@ -3,7 +3,7 @@
 
 <br>
 
-{% if course.id not in userEnrollment and  session.user_id %}
+{% if course.id not in userEnrollment and not course.userid == userID%}
     <div> 
         <form action="/course/{{id}}" method="post" >
             <h2> {{ title }}, {{credits}} op  &nbsp; <input type="submit" name="joinCourse" class="button"  value="Liity kurssille"> </input> <h2>  

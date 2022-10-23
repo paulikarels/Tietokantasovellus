@@ -63,6 +63,8 @@ def add_course():
         userID = session.get("user_id", -1)
         admin = users.get_admin_status()
         test = courses.add_course(userID, title, op)
+        if  test == False:
+            return error("Kurssinimi on jo olemassa!", "newCourse")
         #return render_template("newCourse.html", courses=test, admin=admin)
         return redirect("/course/"+str(test[0]))
         #return redirect("/course/"+str(1))
@@ -84,7 +86,10 @@ def add_Quiz(id):
         checkA = [quiz1, quiz2, quiz3]
           
         if (answer not in checkA):
-            return error("Ei oikeaa vastausta valinnoissa!", '/newQuiz/'+str(id))
+            error("Ei oikeaa vastausta valinnoissa!", '/newQuiz/'+str(id))    
+            return render_template(
+                "newQuiz.html", admin=admin, question=question, answer=answer, quiz1=quiz1, quiz2=quiz2, quiz3=quiz3
+            )  
 
         questions.add_question(id, question, answer)
         q_id = questions.get_id(id)[-1][0]

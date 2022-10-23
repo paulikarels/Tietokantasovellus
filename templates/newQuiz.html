@@ -10,27 +10,27 @@
 {% endwith %}
 
 {% if session.user_id and  admin == "True"  %}
-{{question}} {{answer}} {{quiz1}} {{quiz2}} {{quiz3}} {{id}}
+
 <form  method="POST">
     <h2>Lisää kysymys</h2>
     <p>Kysymys: 
-        <input type="text" name="question" value="{{question}}" maxlength="55"  required>
+        <input type="text" name="question" value="{{question}}" minlength="4" maxlength="40"  required>
     </p>
     <p>Oikea vastaus:
-        <input type="text" name="answer" value="{{answer}}" maxlength="30"  required>
+        <input type="text" name="answer" value="{{answer}}" minlength="1" maxlength="25"  required>
     </p>
 
 
     <p>Vastausvaihtoehto 1*:
-        <input type="text" name="quiz1" value="{{quiz1}}" maxlength="30"  required>
+        <input type="text" name="quiz1" value="{{quiz1}}" minlength="1"  maxlength="25"  required>
     </p>
 
     <p>Vastausvaihtoehto 2*:
-        <input type="text" name="quiz2" value="{{quiz2}}" maxlength="30"  required>
+        <input type="text" name="quiz2" value="{{quiz2}}" minlength="1"  maxlength="25"  required>
     </p>
 
     <p>Vastausvaihtoehto 3:
-        <input type="text" name="quiz3" value="{{quiz3}}">
+        <input type="text" name="quiz3" value="{{quiz3}}" minlength="1"  maxlength="25"  >
     </p>
 
 
