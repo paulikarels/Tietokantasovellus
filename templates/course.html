@@ -63,11 +63,7 @@
             {% endif %}
             <div class="courseHeader">
                 
-                {% if exercise.done == false%}
-                    <div class="topright">F</div> 
-                {% else %}
-                    <div class="topright">T</div> 
-                {% endif %}
+
                 <div class="topleft">{{exercise.description}}</div>
 
                 {% if session.user_id and  course.id  in userEnrollment or  course.userid == userID %}
